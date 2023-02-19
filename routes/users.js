@@ -21,11 +21,11 @@ router.post('/', async (req, res) => {
 // GET /users/:id
 router.get('/', async (req, res) => {
     try {
-        const { _id } = req.cookies.auth
+        const _id = req.headers.auth
         if (!_id) return res.send("you are not login")
         const user = await userController.getUserById(_id);
         if (!user) return res.send("you are not login")
-        res.json(user);
+        res.json(true);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -70,7 +70,7 @@ router.post('/login', (req, res) => {
 
 
         // If user exists, return a success message
-        return res.status(200).cookie("auth", { _id: user._id }, { httpOnly: true }).json({ message: 'Login successful' });
+        return res.status(200).set("auth", user._id).cookie("auth", { _id: user._id }, { httpOnly: true }).json({ message: 'Login successful' });
     });
 });
 
