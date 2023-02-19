@@ -2,6 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const app = express();
 const cors = require("cors")
+const cookieParser = require("cookie-parser")
+
+app.use(cookieParser())
 
 app.use(cors({ origin: "*" || ["*"] || [""] }))
 
@@ -28,6 +31,7 @@ const users = require("./routes/users")
 app.use("/api/category", category)
 app.use("/api/posts", posts)
 app.use("/api/users", users)
+
 
 // Start the server and listen on a port
 const port = process.env.PORT || 3000;

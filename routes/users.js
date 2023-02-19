@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express()
 const router = express.Router();
+const jwt = require("jsonwebtoken");
+const { envVariable } = require('../config');
 
 const userController = require("../controllers/user")
 const User = require("../models/user")
@@ -17,10 +19,12 @@ router.post('/', async (req, res) => {
 });
 
 // GET /users/:id
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await userController.getUserById(id);
+        const { _id } = req.cookies.auth
+        if (!_id) return res.send("you are not login")
+        const user = await userController.getUserById(_id);
+        if (!user) return res.send("you are not login")
         res.json(user);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -64,8 +68,9 @@ router.post('/login', (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
+
         // If user exists, return a success message
-        return res.json({ message: 'Login successful' });
+        return res.status(200).cookie("auth", { _id: user._id }, { httpOnly: true }).json({ message: 'Login successful' });
     });
 });
 

@@ -10,16 +10,21 @@
     "type": "git",
     "url": "git+https://github.com/vipinsatlok/techfans.git"
   },
-  "author": "",
+  "author": "Vipin Kumar",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vipinsatlok/techfans/issues"
   },
   "homepage": "https://github.com/vipinsatlok/techfans#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
